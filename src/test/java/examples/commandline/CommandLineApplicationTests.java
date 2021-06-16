@@ -38,7 +38,7 @@ class CommandLineApplicationTests {
 	@MethodSource("getParameterizedTestCases")
 	void contextLoads(String arguments, String expected) {
 		// Arrange
-		String[] args = arguments.split("\\s");
+		String[] args = arguments != null ? arguments.split("\\s") : null;
 
 		// ACT
 		CommandLineApplication.main(args);
@@ -49,6 +49,7 @@ class CommandLineApplicationTests {
 
 	static Stream<Arguments> getParameterizedTestCases() {
 		return Stream.of(
+			Arguments.arguments(null, ""),
 			Arguments.arguments("QUIT", "exit\r\n"),
 			Arguments.arguments("CD \\ PWD QUIT", "CD \\\r\nROOT\r\nexit\r\n"),
 			Arguments.arguments("MKDIR", "MKDIR null\r\nDirectory cannot be empty\r\n"),
